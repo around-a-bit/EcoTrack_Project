@@ -13,3 +13,8 @@ COPY . /app/
 # CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000"]
+
+
+COPY . /app/
+RUN chmod +x /app/start.sh
+CMD ["bash", "/app/start.sh"]
