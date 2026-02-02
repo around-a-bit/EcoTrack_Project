@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>🚛 Collector Dashboard</h1>
+
+{% for p in pickups %}
+<div class="card">
+    <p><b>ID:</b> {{ p.id }}</p>
+    <p><b>User:</b> {{ p.user.username }}</p>
+    <p><b>Waste:</b> {{ p.get_waste_type_display }}</p>
+    <p><b>Address:</b> {{ p.pickup_address }}</p>
+    <p><b>Status:</b> <span class="status {{ p.status }}">{{ p.status }}</span></p>
+
+    <a class="btn" href="/collector/update/{{ p.id }}/">Update Status</a>
+</div>
+{% empty %}
+<p>No assigned pickups yet.</p>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>📦 My Pickup Requests</h1>
+
+{% if requests %}
+    {% for r in requests %}
+        <div class="card">
+            <p><b>Waste Type:</b> {{ r.get_waste_type_display }}</p>
+            <p><b>Address:</b> {{ r.pickup_address }}</p>
+            <p><b>Description:</b> {{ r.description }}</p>
+            <p><b>Status:</b>
+                <span class="status {{ r.status }}">{{ r.status }}</span>
+            </p>
+            <p><b>AI Suggested:</b> {{ r.suggested_waste_type }}</p>
+            <p><b>Segregation Score:</b> ⭐ {{ r.segregation_score }}/100</p>
+            <p><b>Tip:</b> {{ r.tip }}</p>
+
+            <p><small>Created: {{ r.created_at }}</small></p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No pickup requests yet.</p>
+{% endif %}
+
+{% endblock %}

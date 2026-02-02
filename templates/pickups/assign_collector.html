@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>✅ Assign Collector</h1>
+
+<div class="card">
+    <p><b>Pickup ID:</b> {{ pickup.id }}</p>
+    <p><b>User:</b> {{ pickup.user.username }}</p>
+    <p><b>Waste Type:</b> {{ pickup.get_waste_type_display }}</p>
+    <p><b>Address:</b> {{ pickup.pickup_address }}</p>
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Assign</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EcoTrack</title>
+    <style>
+        body { font-family: Arial; margin: 0; background: #f4f6f9; }
+        nav { background: #111827; padding: 15px; }
+        nav a { color: white; margin-right: 15px; text-decoration: none; font-weight: bold; }
+        .container { max-width: 900px; margin: 20px auto; background: white; padding: 20px; border-radius: 12px; }
+        h1 { color: #111827; }
+        .btn { padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer; background: #2563eb; color: white; text-decoration: none; }
+        .card { background: #f9fafb; padding: 15px; border-radius: 10px; margin-bottom: 12px; }
+        .status { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .PENDING { background: #fef3c7; }
+        .ASSIGNED { background: #dbeafe; }
+        .PICKED { background: #fde68a; }
+        .COMPLETED { background: #bbf7d0; }
+        .CANCELLED { background: #fecaca; }
+        input, select, textarea { width: 100%; margin-top: 6px; margin-bottom: 12px; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/">EcoTrack</a>
+    <a href="/create/">Create Pickup</a>
+    <a href="/my-requests/">My Requests</a>
+
+    {% if user.is_authenticated %}
+        <span style="color:white; margin-left: 10px;">
+            👋 {{ user.username }} ({{ user.profile.role }})
+        </span>
+        <a href="/accounts/logout/" style="float:right;">Logout</a>
+    {% else %}
+        <a href="/accounts/login/" style="float:right;">Login</a>
+    {% endif %}
+
+    {% if user.profile.role == "ADMIN" %}
+        <a href="/admin-dashboard/">Admin Dashboard</a>
+    {% endif %}
+
+    {% if user.profile.role == "COLLECTOR" %}
+        <a href="/collector/">Collector Dashboard</a>
+    {% endif %}
+</nav>
+
+{% if messages %}
+    <div style="max-width:900px;margin:10px auto;">
+        {% for message in messages %}
+            <p style="background:#fef3c7;padding:10px;border-radius:8px;">
+                {{ message }}
+            </p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

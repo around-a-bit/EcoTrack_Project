@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>📊 Analytics</h2>
+
+<div class="card">
+    <p><b>Total:</b> {{ stats.total }}</p>
+    <p><b>Pending:</b> {{ stats.pending }}</p>
+    <p><b>Assigned:</b> {{ stats.assigned }}</p>
+    <p><b>Picked:</b> {{ stats.picked }}</p>
+    <p><b>Completed:</b> {{ stats.completed }}</p>
+    <p><b>Cancelled:</b> {{ stats.cancelled }}</p>
+</div>
+
+<div class="card">
+    <h3>🗂️ Waste Type Breakdown</h3>
+    {% for w in waste_stats %}
+        <p>{{ w.waste_type }} : {{ w.count }}</p>
+    {% endfor %}
+</div>
+
+<h1>🧑‍💼 Admin Dashboard</h1>
+
+{% for p in pickups %}
+<div class="card">
+    <p><b>ID:</b> {{ p.id }}</p>
+    <p><b>User:</b> {{ p.user.username }}</p>
+    <p><b>Waste:</b> {{ p.get_waste_type_display }}</p>
+    <p><b>Address:</b> {{ p.pickup_address }}</p>
+    <p><b>Status:</b> <span class="status {{ p.status }}">{{ p.status }}</span></p>
+
+    {% if p.assigned_collector %}
+        <p><b>Collector:</b> {{ p.assigned_collector.username }}</p>
+    {% else %}
+        <p><b>Collector:</b> Not assigned</p>
+    {% endif %}
+
+    {% if p.status == "PENDING" %}
+        <a class="btn" href="/admin-dashboard/assign/{{ p.id }}/">Assign Collector</a>
+    {% endif %}
+</div>
+{% empty %}
+<p>No pickup requests found.</p>
+{% endfor %}
+
+{% endblock %}
